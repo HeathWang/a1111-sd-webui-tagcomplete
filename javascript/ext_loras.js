@@ -46,13 +46,13 @@ async function load() {
 
 async function sanitize(tagType, text) {
     if (tagType === ResultType.lora) {
-        let multiplier = TAC_CFG.extraNetworksDefaultMultiplier;
-        let info = await fetchAPI(`tacapi/v1/lora-info/${text}`)
-        if (info && info["preferred weight"]) {
-            multiplier = info["preferred weight"];
-        }
+        // let multiplier = TAC_CFG.extraNetworksDefaultMultiplier;
+        // let info = await fetchAPI(`tacapi/v1/lora-info/${text}`)
+        // if (info && info["preferred weight"]) {
+        //     multiplier = info["preferred weight"];
+        // }
 
-        return `<lora:${text}:${multiplier}>`;
+        return `<lora:${text}:0.6>`;
     }
     return null;
 }
