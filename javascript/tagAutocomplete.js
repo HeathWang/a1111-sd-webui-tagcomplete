@@ -508,14 +508,14 @@ async function insertTextAtCursor(textArea, result, tagword, tabCompletedWithout
     if (TAC_CFG.modelKeywordCompletion !== "Never" && (tagType === ResultType.lora || tagType === ResultType.lyco)) {
         let keywords = null;
         // Check built-in activation words first
-        if (tagType === ResultType.lora || tagType === ResultType.lyco) {
+        /*if (tagType === ResultType.lora || tagType === ResultType.lyco) {
             let info = await fetchAPI(`tacapi/v1/lora-info/${result.text}`)
             if (info && info["activation text"]) {
                 keywords = info["activation text"];
             }
-        }
+        }*/
 
-        if (!keywords && modelKeywordPath.length > 0 && result.hash && result.hash !== "NOFILE" && result.hash.length > 0) {
+        /*if (!keywords && modelKeywordPath.length > 0 && result.hash && result.hash !== "NOFILE" && result.hash.length > 0) {
             let nameDict = modelKeywordDict.get(result.hash);
             let names = [result.text + ".safetensors", result.text + ".pt", result.text + ".ckpt"];
 
@@ -539,7 +539,7 @@ async function insertTextAtCursor(textArea, result, tagword, tabCompletedWithout
                 if (!found)
                     keywords = nameDict.get("none");
             }
-        }
+        }*/
 
         if (keywords && keywords.length > 0) {
             textBeforeKeywordInsertion = newPrompt;
