@@ -23,11 +23,12 @@ Booru style tag autocompletion for the AUTOMATIC1111 Stable Diffusion WebUI
 # 📄 Description
 
 Tag Autocomplete is an extension for the popular [AUTOMATIC1111 web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui) for Stable Diffusion.
+You can install it using the inbuilt available extensions list, clone the files manually as described [below](#-installation), or use a pre-packaged version from [Releases](https://github.com/DominikDoom/a1111-sd-webui-tagcomplete/releases).
 
 It displays autocompletion hints for recognized tags from "image booru" boards such as Danbooru, which are primarily used for browsing Anime-style illustrations.
-Since some Stable Diffusion models were trained using this information, for example [Waifu Diffusion](https://github.com/harubaru/waifu-diffusion) and many of the NAI-descendant models or merges, using exact tags in prompts can often improve composition and consistency.
+Since most custom Stable Diffusion models were trained using this information or merged with ones that did, using exact tags in prompts can often improve composition and consistency, even if the model itself has a photorealistic style.
 
-You can install it using the inbuilt available extensions list, clone the files manually as described [below](#-installation), or use a pre-packaged version from [Releases](https://github.com/DominikDoom/a1111-sd-webui-tagcomplete/releases).
+Disclaimer: The default tag lists contain NSFW terms, please use them responsibly.
 
 <br/>
 
@@ -486,6 +487,7 @@ Example with Chinese translation:
 ## List of translations
 - [🇨🇳 Chinese tags](https://github.com/DominikDoom/a1111-sd-webui-tagcomplete/discussions/23) by @HalfMAI, using machine translation and manual correction for the most common tags (uses legacy format)
 - [🇨🇳 Chinese tags](https://github.com/sgmklp/tag-for-autocompletion-with-translation) by @sgmklp, smaller set of manual translations based on https://github.com/zcyzcy88/TagTable
+- [🇯🇵 Japanese tags](https://github.com/DominikDoom/a1111-sd-webui-tagcomplete/discussions/265) by @applemango, both machine and human translations available
 
 > ### 🫵 I need your help!
 > Translations are a community effort. If you have translated a tag file or want to create one, please open a Pull Request or Issue so your link can be added here.

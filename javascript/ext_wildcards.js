@@ -1,14 +1,14 @@
 // Regex
-const WC_REGEX = /\b__([^,]+)__([^, ]*)\b/g;
+const WC_REGEX = new RegExp(/__([^,]+)__([^, ]*)/g);
 
 // Trigger conditions
-const WC_TRIGGER = () => TAC_CFG.useWildcards && [...tagword.matchAll(WC_REGEX)].length > 0;
-const WC_FILE_TRIGGER = () => TAC_CFG.useWildcards && (tagword.startsWith("__") && !tagword.endsWith("__") || tagword === "__");
+const WC_TRIGGER = () => TAC_CFG.useWildcards && [...tagword.matchAll(new RegExp(WC_REGEX.source.replaceAll("__", escapeRegExp(TAC_CFG.wcWrap)), "g"))].length > 0;
+const WC_FILE_TRIGGER = () => TAC_CFG.useWildcards && (tagword.startsWith(TAC_CFG.wcWrap) && !tagword.endsWith(TAC_CFG.wcWrap) || tagword === TAC_CFG.wcWrap);
 
 class WildcardParser extends BaseTagParser {
     async parse() {
         // Show wildcards from a file with that name
-        let wcMatch = [...tagword.matchAll(WC_REGEX)]
+        let wcMatch = [...tagword.matchAll(new RegExp(WC_REGEX.source.replaceAll("__", escapeRegExp(TAC_CFG.wcWrap)), "g"))];
         let wcFile = wcMatch[0][1];
         let wcWord = wcMatch[0][2];
 
@@ -38,7 +38,7 @@ class WildcardParser extends BaseTagParser {
                 }
                 wildcards = wildcards.concat(getDescendantProp(yamlWildcards[basePath], fileName));
             } else {
-                const fileContent = (await fetchAPI(`tacapi/v1/wildcard-contents?basepath=${basePath}&filename=${fileName}.txt`, false))
+                const fileContent = (await fetchTacAPI(`tacapi/v1/wildcard-contents?basepath=${basePath}&filename=${fileName}.txt`, false))
                     .split("\n")
                     .filter(x => x.trim().length > 0 && !x.startsWith('#'));  // Remove empty lines and comments
                 wildcards = wildcards.concat(fileContent);
@@ -64,8 +64,8 @@ class WildcardFileParser extends BaseTagParser {
     parse() {
         // Show available wildcard files
         let tempResults = [];
-        if (tagword !== "__") {
-            let lmb = (x) => x[1].toLowerCase().includes(tagword.replace("__", ""))
+        if (tagword !== TAC_CFG.wcWrap) {
+            let lmb = (x) => x[1].toLowerCase().includes(tagword.replace(TAC_CFG.wcWrap, ""))
             tempResults = wildcardFiles.filter(lmb).concat(wildcardExtFiles.filter(lmb)) // Filter by tagword
         } else {
             tempResults = wildcardFiles.concat(wildcardExtFiles);
@@ -151,9 +151,9 @@ async function load() {
 
 function sanitize(tagType, text) {
     if (tagType === ResultType.wildcardFile || tagType === ResultType.yamlWildcard) {
-        return `__${text}__`;
+        return `${TAC_CFG.wcWrap}${text}${TAC_CFG.wcWrap}`;
     } else if (tagType === ResultType.wildcardTag) {
-        return text.replace(/^.*?: /g, "");
+        return text;
     }
     return null;
 }
